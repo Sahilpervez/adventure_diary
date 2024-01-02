@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -32,13 +33,17 @@ class _ImageInputState extends ConsumerState<ImageInput> {
     // get the file name as given by the camera/internal_storage.
     final fileName = path.basename(imgFile.path);
     // Save a copy of image in the app directory with the original name of the image. 
-    print("\nDIRECTORY NAME = ${appDirectory.path}");
-    print("\nFILE NAME = $fileName \n");
-    print("Saving file....");
+    if (kDebugMode) {
+      print("\nDIRECTORY NAME = ${appDirectory.path}");
+      print("\nFILE NAME = $fileName \n");
+      print("Saving file....");
+    }
     final savedImage =
         await File(imgFile.path).copy('${appDirectory.path}/$fileName');
     // send the image back to the main widget that has use this ImageInput widget
-    print('File saved!!');
+    if (kDebugMode) {
+      print('File saved!!');
+    }
     widget.saveImage(savedImage);
   }
 

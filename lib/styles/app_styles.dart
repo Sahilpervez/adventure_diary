@@ -7,7 +7,7 @@ class AppStyles {
     fontWeight: FontWeight.w600,
     fontSize: 25
   );
-  static Widget AppIconButton({required Icon icon,required Function onTap}){
+  static Widget appStyleIconButton({required Icon icon,required Function onTap}){
     return IconButton(
                   onPressed: () {
                     onTap();
@@ -17,7 +17,7 @@ class AppStyles {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     backgroundColor: Colors.grey.shade300,
-                    foregroundColor: Color(0xff1b6c55),
+                    foregroundColor: const Color(0xff1b6c55),
                     surfaceTintColor: Colors.white,
                   ),
                   icon: icon,);

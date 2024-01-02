@@ -1,5 +1,6 @@
 import 'package:adventure_diary/repository/great_places_repo.dart';
 import 'package:adventure_diary/screens/add_place_screen.dart';
+import 'package:adventure_diary/screens/place_details_screen.dart';
 import 'package:adventure_diary/styles/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,7 +33,7 @@ class PlacesListScreen extends ConsumerWidget {
                 "Adventure Diary",
                 style: AppStyles.titleTheme,
               ),
-              AppStyles.AppIconButton(
+              AppStyles.appStyleIconButton(
                 onTap: () {
                   final navigator = Routemaster.of(context);
                   navigator.push(AddPlacesScreen.routePath);
@@ -69,61 +70,81 @@ class PlacesListScreen extends ConsumerWidget {
                 const Center(child:Text("Seems you haven't added any places yet")),
               if (places.isNotEmpty)
                 ...places.map(
-                (e) => Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 1.2,
+                (e) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: MaterialButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: (){
+                      Routemaster.of(context).push('${PlaceDetailsScreen.routePath}/${e.id}');
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)
                     ),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  margin: const EdgeInsets.symmetric(vertical: 5),
-                  padding: const EdgeInsets.all(7),
-                  height: 150,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 7),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          image: DecorationImage(
-                              image: FileImage(
-                                e.image,
-                              ),
-                              fit: BoxFit.cover),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey,
+                          width: 1.2,
                         ),
-                        width: size.width * 0.35,
+                        borderRadius: BorderRadius.circular(15),
                       ),
-                      SizedBox(
-                        // color: Colors.amber,
-                        width: size.width * 0.65 - 54,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              e.title,
-                              style: const TextStyle(
-                                fontFamily: 'notoSans',
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18,
+                      // margin: const EdgeInsets.symmetric(vertical: 5),
+                      padding: const EdgeInsets.all(7),
+                      height: 150,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Hero(tag: e.id,
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 7),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                image: DecorationImage(
+                                    image: FileImage(
+                                      e.image,
+                                    ),
+                                    fit: BoxFit.cover),
                               ),
+                              width: size.width * 0.35,
                             ),
-                            Text(
-                              e.location!.address,
-                              style: const TextStyle(
-                                fontFamily: 'notoSans',
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                              ),
-                              maxLines: 4,
-                              overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(
+                            // color: Colors.amber,
+                            width: size.width * 0.65 - 54,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Hero(
+                                  tag: e.title,
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: Text(
+                                      e.title,
+                                      style: const TextStyle(
+                                        fontFamily: 'notoSans',
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  e.location!.address,
+                                  style: const TextStyle(
+                                    fontFamily: 'notoSans',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12,
+                                  ),
+                                  maxLines: 4,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),

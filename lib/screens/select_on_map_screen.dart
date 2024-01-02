@@ -104,7 +104,7 @@ class _SelectOnMapScreenState extends ConsumerState<SelectOnMapScreen> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      AppStyles.AppIconButton(
+                      AppStyles.appStyleIconButton(
                         icon: const Icon(Icons.cancel),
                         onTap: () {
                           Routemaster.of(context).pop();

@@ -20,7 +20,8 @@ class GreatPlaces extends StateNotifier<List<Place>> {
     return [...state];
   }
   Place getPlaceById(String id){
-    return state.firstWhere((element) => element.id ==id);
+    final ele = state.firstWhere((element) => element.id == id);
+    return ele;
   }
   void addPlace(
       String pickedTitle, File pickedImage, PlaceLocation? pickedLoation) {
@@ -55,7 +56,7 @@ class GreatPlaces extends StateNotifier<List<Place>> {
     }
     final data = await DBHelper.getData('places');
     final List<Place> places = [];
-    data.forEach((element) {
+    for (var element in data) {
       places.add(Place(
         id: element['id'],
         image: File(element['image']),
@@ -66,7 +67,7 @@ class GreatPlaces extends StateNotifier<List<Place>> {
           longitude: element['loc_long'],
         ),
       ));
-    });
+    }
     state = [
       ...places,
       ...state,

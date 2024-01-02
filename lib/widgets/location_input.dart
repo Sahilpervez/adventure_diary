@@ -25,11 +25,10 @@ class _LocationInputState extends ConsumerState<LocationInput> {
   late MapController _mapController;
 
   Future<void> _getCurentUserLocation() async {
-    print("GET USER LOCATION");
     final userlocation = ref.read(currentLocationProvider);
     ref.read(previousLocationProvider.notifier).update((state) => GeoPoint(
         latitude: userlocation!.latitude!,
-        longitude: userlocation!.longitude!));
+        longitude: userlocation.longitude!));
     ref.read(showPreviewProvider.notifier).update((state) => true);
     if (kDebugMode) {
       print("LATITUDE = ${userlocation!.latitude}");
@@ -39,7 +38,6 @@ class _LocationInputState extends ConsumerState<LocationInput> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setIntialLocation();
   }
@@ -51,7 +49,6 @@ class _LocationInputState extends ConsumerState<LocationInput> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _mapController.dispose();
   }
@@ -165,7 +162,7 @@ class _LocationInputState extends ConsumerState<LocationInput> {
                 onPressed: () {
                   final navigator = Routemaster.of(context);
                   navigator.push(
-                      "${AddPlacesScreen.routePath}/${SelectOnMapScreen.routePath}");
+                      "${AddPlacesScreen.routePath}${SelectOnMapScreen.routePath}");
                 },
                 icon: const Icon(Icons.map),
                 label: const Text(

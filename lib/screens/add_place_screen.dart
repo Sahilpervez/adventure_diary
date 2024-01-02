@@ -27,7 +27,6 @@ class _AddPlacesScreenState extends ConsumerState<AddPlacesScreen> {
     super.dispose();
     _titleController.dispose();
     _addressController.dispose();
-    print("Dispose pressed");
   }
 
   File? _pickedImage;
@@ -49,33 +48,33 @@ class _AddPlacesScreenState extends ConsumerState<AddPlacesScreen> {
       ));
       return;
     }
-    final _location = ref.read(previousLocationProvider);
-    var _address = ref.read(addressProvider);
-    if (_address == null && _addressController.text.isEmpty) {
+    final location = ref.read(previousLocationProvider);
+    var address = ref.read(addressProvider);
+    if (address == null && _addressController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text("Enter a address"),
         ),
       );
         return;
     }
-    if(_address == null && _addressController.text.isNotEmpty){
-      _address = _addressController.text;
+    if(address == null && _addressController.text.isNotEmpty){
+      address = _addressController.text;
     }
-    final _pickedLocation;
-    if (_location != null || _address != null) {
-      _pickedLocation = PlaceLocation(
-        latitude: (_location == null) ? 0 : _location.latitude,
-        longitude: (_location == null) ? 0 : _location.longitude,
-        address: _address ?? "",
+    final PlaceLocation? pickedLocation;
+    if (location != null || address != null) {
+      pickedLocation = PlaceLocation(
+        latitude: (location == null) ? 0 : location.latitude,
+        longitude: (location == null) ? 0 : location.longitude,
+        address: address ?? "",
       );
     } else {
-      _pickedLocation = null;
+      pickedLocation = null;
     }
 
     ref
         .read(greatPlacesProvider.notifier)
-        .addPlace(_titleController.text, _pickedImage!, _pickedLocation);
+        .addPlace(_titleController.text, _pickedImage!, pickedLocation);
 
     ref.read(addressProvider.notifier).update(
           (state) => null,
@@ -92,7 +91,7 @@ class _AddPlacesScreenState extends ConsumerState<AddPlacesScreen> {
       appBar: AppBar(
         title: const Text("Add a new place", style: AppStyles.titleTheme),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_rounded),
+          icon: const Icon(Icons.arrow_back_rounded),
           onPressed: () {
             ref.read(addressProvider.notifier).update(
                   (state) => null,
@@ -137,7 +136,7 @@ class _AddPlacesScreenState extends ConsumerState<AddPlacesScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Consumer(builder: (context, ref, child) {
@@ -177,10 +176,10 @@ class _AddPlacesScreenState extends ConsumerState<AddPlacesScreen> {
                     ImageInput(
                       saveImage: _selectedImage,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    LocationInput(),
+                    const LocationInput(),
                   ],
                 ),
               ),
