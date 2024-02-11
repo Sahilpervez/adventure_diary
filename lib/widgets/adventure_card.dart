@@ -75,6 +75,7 @@ class AdventureCard extends ConsumerWidget {
                             fontWeight: FontWeight.w700,
                             fontSize: 18,
                           ),
+                          maxLines: 1,
                         ),
                       ),
                     ),
