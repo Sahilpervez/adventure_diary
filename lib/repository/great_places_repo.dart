@@ -75,4 +75,14 @@ class GreatPlaces extends StateNotifier<List<Place>> {
     _ref.read(dbLoadingProvier.notifier).update((state) => true);
     _ref.read(loadingProvider.notifier).update((state) => false);
   }
+
+  Future<bool> deleteItem(id) async{
+    final res = await DBHelper.deleteAdventure(id);
+    if(res != true){
+      return false;
+    }
+    state.removeWhere((element) => element.id == id);
+    state = [...state];
+    return true;
+  }
 }

@@ -28,4 +28,14 @@ class DBHelper {
     final db = await DBHelper.database();
     return db.query(table);
   }
+
+  static Future<bool> deleteAdventure(String id)async{
+    final db = await DBHelper.database();
+    final res = await db.delete('places',where: "id= ?", whereArgs: [id]);
+    print(res);
+    if(res != 1){
+      return false;
+    }
+    return true;
+  }
 }
